@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{%block main%}
+
+<ol class="breadcrumb">
+    <li><a href="/">管理首页</a></li>
+    <li><span>用户列表</span></li>
+</ol>
+<h3>用户列表</h3>
+<table class="table table-hover">
+    <!-- 表头 用户名 密码 管理员 -->
+    <tr>
+        <th>用户名</th>
+        <th>密码</th>
+        <th>是否是管理员</th>
+    </tr>
+    <!-- 括号百分号可以通过模板语言去写条件语句，遍历输出 -->
+    {% for user in users %}
+    <tr>
+        <td>{{ user.username}}</td>
+        <td>{{user.password}}</td>
+        <td>{% if user.isAdmin %}
+            是
+            {% else %}
+            否
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<nav aria-label="...">
+  <ul class="pager">
+    <li class="previous"><a href="/admin/user?page={{page-1}}"><span aria-hidden="true">&larr;</span> 上一页</a></li>
+    <li class="next"><a href="#">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+  </ul>
+</nav>
+
+{%endblock%}
