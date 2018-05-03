@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block main %}
+   <ol class = "breadcrumb">
+   		<li><a href="/admin">管理首页</a></li>
+   		<li><span>内容添加</span></li>
+   </ol>
+   <h3>内容添加</h3>
+   <!-- 添加表单 -->
+   <form method = "post">
+   		   <div class = "form-group">
+               <label for="title">分类：</label>
+                  <select name="category" id="category" class = "form-control">
+                     <!-- 这里的分类我们需要从数据库中进行读取 -->
+                     {% for category in categories %}
+                     {% if category._id.toString() == content.category._id.toString() %}
+                      <option selected value="{{ category._id.toString() }}">{{ category.name }}</option>
+                     {% else %}
+                      <option value="{{ category._id.toString() }}">{{ category.name }}</option>
+                     {% endif %}
+                    
+                     {% endfor %}
+                  </select>
+            </div>
+             <div class="form-group">
+                 <label for="title">标题：</label>
+                 <input type="text" class="form-control" name = "title" placeholder="请输入内容标题" value = "{{content.title}}">
+             </div>
+             <div class="form-group">
+                 <label for="description">简介：</label>
+                 <textarea type="text" class="form-control" name = "description" placeholder="请输入内容简介" rows = "5">{{ content.description }}</textarea>
+             </div>
+             <div class="form-group">
+                 <label for="content">内容：</label>
+                 <textarea type="text" class="form-control" name = "content" placeholder="请输入内容" rows = "10">{{ content.content }}</textarea>
+             </div>
+           <button type="submit" class="btn btn-default btn-primay">提交</button>
+   </form>
+{% endblock %}
+
+
+
+
+
+
+
+
+

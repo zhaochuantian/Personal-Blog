@@ -1,0 +1,18 @@
+<nav aria-label="...">
+  <ul class="pager">
+  	{% if page == 1 %}
+  	<li class="previous disabled"><a href="/admin/{{path}}?page=1"><span aria-hidden="true">&larr;</span> 上一页</a></li>
+  	{% else %}
+  	<li class="previous"><a href="/admin/{{path}}?page={{page-1}}"><span aria-hidden="true">&larr;</span> 上一页</a></li>
+  	{% endif %}
+	
+	<li>当前一共有 {{ count }} 条数据，每页显示 {{ limit }} 条数据，一共 {{ pages }} 页，当前第 {{ page }} 页</li>
+
+    {% if page == pages %}
+     <li class="next disabled"><a href="/admin/{{path}}?page={{pages}}">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+    {% else %}
+     <li class="next"><a href="/admin/{{path}}?page={{page+1}}">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+    {% endif %}
+   
+  </ul>
+</nav>

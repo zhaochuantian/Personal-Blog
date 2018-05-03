@@ -1,0 +1,99 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>博客</title>
+<link href="public/css/main.css" rel="stylesheet" type="text/css">
+<link href="public/fontAwesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<script src = "public/js/jquery-1.12.4.min.js"></script>
+<script src = "public/js/index.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <div class="backimg"><img src="public/images/IMG_0293.JPG"></div>
+        <div class="logo"><span></span><img src="public/images/00002637.png"></div>
+    </header>
+
+    <nav>
+        <div class="menu">
+                {% if currentCategory == "" %}
+                     <a href="/" class="focus">首页</a>
+                {% else %}
+                     <a href="/">首页</a>
+                {% endif %}
+
+
+                <!-- 循环 -->
+                {% for category in categories %}
+                {% if category._id.toString() == currentCategory %}
+                    <a href="/?category={{category._id.toString()}}" class="focus">{{category.name}}</a>
+                {% else %}
+                    <a href="/?category={{category._id.toString()}}">{{category.name}}</a>
+                {% endif %}
+
+                {% endfor %}
+        </div>
+    </nav>
+    <main class="clear">
+        <div class="mainLeft">
+            {% block content %}
+            {% endblock %}
+
+
+
+        </div>
+
+        <div class="mainRight">
+            {% if userInfo._id %}
+            <div class="rightBox userInfo">
+                <div class="title"><span>用户信息</span></div>
+                <p><span class="colDark">{{ userInfo.username }}</span></p>
+
+                 {% if userInfo.isAdmin %}
+                 <p>
+                     <span class="colDanger info">你好，管理员！😁</span>
+                     <!--增加一个链接，可以登录后台的链接 -->
+                     <a href="/admin">进入管理</a>
+                 </p>
+                 {% else %}
+                 <p><span class="colDanger info">你好，欢迎光临我的博客！😁</span></p>
+                 {% endif %}
+
+                <p><span class="colDark"><a href="/logout" id="logoutBtn">退出</a></span></p>
+            </div>
+            {% else %}
+
+            <div class="rightBox" id="loginBox">
+                <div class="title"><span>登录</span></div>
+                <div class="line"><span class="colDark">用户名：</span><input type="text" name = "username"/><em></em></div>
+                <div class="line"><span class="colDark">密码：</span><input type="password" name = "password"/><em></em></div>
+                <div class="line"><span class="colDark"></span><button>登 录</button></div>
+                <p class="textRight">还没注册？<a href="#" class="colMint">马上注册</a>　</p>
+                <p class="colWarning textCenter"></p>
+            </div>
+            {% endif %}
+            <div class="rightBox" id="registerBox" style = "display: none">
+                <div class="title"><span>注册</span></div>
+                <div class="line"><span class="colDark">用户名：</span><input type="text" name = "username" /></div>
+                <div class="line"><span class="colDark">密码：</span><input type="password" name = "password" /></div>
+                <div class="line"><span class="colDark">确认：</span><input type="password" name = "repassword" /></div>
+                <div class="line"><span class="colDark"></span><button>注 册</button></div>
+                <p class="textRight">已有账号？<a href="#" class="colMint">马上登录</a>　</p>
+                <p class="colWarning textCenter"></p>
+            </div>
+
+
+            <div class="rightBox">
+                <div class="title"><span>社区</span></div>
+                </div>
+            </div>
+
+
+    </main>
+
+    <div class="copyright textCenter">Copyright 2011-2018  京ICP备12003911号-3 京公网安备11010802011455号</div>
+</body>
+</html>
