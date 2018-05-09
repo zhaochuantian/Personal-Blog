@@ -5,7 +5,7 @@ const express = require("express");
 const router = express.Router();
 //引入数据库模型
 const User = require("../models/User");
-
+const Content = require("../models/Content");
 
 /*
     定义一个统一数据返回格式
@@ -172,6 +172,36 @@ router.get("/user/logout", function(req, res){
     //将cookie删除
     req.cookies.set("userInfo", null);
     res.json(responseData); //删了以后还得去返回状态码 告诉前面是否删除成功
+})
+
+
+
+
+//监听评论的提交
+router.post("/comment/post",function(req,res){
+    //post提交的数据都挂在req.body上面
+    var connentid = req.body.contentid || "";
+    var content = req.body.content || "";
+
+    var postData = {
+        username:req.userInfo.username,
+        postTime: new Date(),
+        content: content
+    }
+    console.log(connentid);
+    //获取到了这个数据以后 需要把这个数据插入到我们对应的数据结构中
+    //先要有内容 查询当前需要评论的文章的数据库 这时候要在前面加一个model content的model
+    Content.findOne({
+        _id:connentid
+    }).then(function(content){
+        //插入本次的数据并且保存
+        content.comments.push(postData);
+        return content.save();
+    }).then(function(newContent){
+        responseData.message = "评论成功";
+        responseData.data = newContent
+        res.json(responseData);
+    })
 })
 
 module.exports = router;

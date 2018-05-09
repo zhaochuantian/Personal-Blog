@@ -12,4 +12,46 @@
              {{content.content}}
          </dfn>
      </div>
+       <!-- 设置用户是否登录，登录以后显示评论页面 -->
+
+    <div class="listBox message">
+        {% if userInfo._id %}
+        <h3 class="textLeft"><strong>评论</strong> <span class="em">一共有 <em id="messageCount">{{content.comments.length}}</em> 条评论</span></h3>
+
+        <p class="textLeft">{{userInfo.username}}</p>
+        <p class="textLeft clear">
+            <!-- 在这里我们可以通过隐藏的标签，渲染我们的数据，在通过这个标签，我们获取到数据 -->
+            <input type="hidden" id = "contentid" value = "{{content._id.toString()}}">
+            <textarea id="messageContent"></textarea><button id="messageBtn" class="submit">提交</button>
+        </p>
+        {% else %}
+        <p class="bgDanger" style="line-height: 30px;">你还没有登录，请先登录！</p>
+        {% endif %}
+
+        {% if !content.comments.length %}
+        <div class="messageList">
+            <div class="messageBox"><p>还没有留言</p></div>
+        </div>
+        {% else %}
+
+        <div class="messageList" style="display: block;">
+
+            {% for comment in content.comments %}
+            <div class="messageBox">
+                <p class="name clear"><span class="fl">{{comment.username}}</span><span class="fr">{{ comment.postTime.toLocaleDateString() }} {{ comment.postTime.toLocaleTimeString() }}</span></p><p>{{comment.content}}</p>
+            </div>
+            {% endfor %}
+            <!-- <div class="messageBox">
+                <p class="name clear">
+                    <span class="fl">admin</span>
+                    <span class="fr">2016年07月29日 17:23:34</span>
+                </p>
+                <p>123123123</p> -->
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+    <script src = "/public/js/jquery-1.12.4.min.js"></script>
+    <script src = "/public/js/comment.js"></script>
 {% endblock %}
