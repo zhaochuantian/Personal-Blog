@@ -124,7 +124,7 @@ button {
   *zoom: 1;
 }
 header {
-  height: 222px;
+  height: 522px;
   position: relative;
   overflow: hidden;
 }
@@ -134,8 +134,9 @@ header .backimg {
   height: 100%;
 }
 header .backimg img {
-  margin: auto;
   display: block;
+  width:100%;
+  height:auto;
 }
 header .logo {
   width: 100%;

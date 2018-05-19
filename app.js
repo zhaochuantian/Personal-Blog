@@ -41,7 +41,6 @@ app.use(function(req,res,next){
     req.userInfo = {};
     if(req.cookies.get("userInfo")){
         //如果取到了数据，说明在cookie里面存了
-        try{
             req.userInfo = JSON.parse(req.cookies.get("userInfo"));//cookie取出来的是一个字符串  通过jsonparse转成对象以后挂在这个req身上,这样后面的路由去判断的时候就比较方便了
 
             //获取当前用户是否是管理员
@@ -49,9 +48,7 @@ app.use(function(req,res,next){
                 req.userInfo.isAdmin = Boolean(userInfo.isAdmin);
                 next();
             })
-        }catch(err){
-            console.log(err);
-        }
+
     }else{
         next();//if完了之后这个else也需要next  要不然他进不到下一个路由去
     }
